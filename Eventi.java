@@ -6,7 +6,7 @@ public class Eventi {
     public synchronized void crea(String nome, int posti) {
         if (!listaEventi.containsKey(nome)) {
             try {
-                listaEventi.put(nome, posti); // se non esiste un evento con nome, nella lista eventi, allora
+                listaEventi.put(nome, posti); // se non esiste un evento 'nome', nella lista eventi, allora
             } catch (Exception e) {
                 System.err.println("Errore nella creazione dell'evento" + e.getMessage());
             }
@@ -55,16 +55,15 @@ public class Eventi {
         listaEventi.printValueGreaterThan0();
     }
 
-    // chiude l'evento con nome nome, quindi lo rimuove dalla lista
+    // chiude l'evento 'nome', quindi lo rimuove dalla lista
     public void chiudiEvento(String nome) {
         // non servono ulteriori controlli, perché la remove non fa niente se non trova l'elemento nella lista
         listaEventi.remove(nome);
     }
 
     public static void main(String[] args) {
-        // bisogna creare un main che simuli l'interazione tra un thread che crea eventi
-        // e un thread che prenota, più un altro thread che prenota
-        Eventi e = new Eventi();
+        Eventi e = new Eventi();    //lista di eventi 'comune' su cui fare le operazioni
+        // Thread admin
         Thread t1 = new Thread(new Runnable() {
             public void run() {
                 try {
@@ -126,6 +125,7 @@ public class Eventi {
                 e.aggiungiPosti("evento4", 30);
             }
         });
+        // Thread utente
         Thread t2 = new Thread(new Runnable() {
             public void run() {
     
@@ -166,6 +166,7 @@ public class Eventi {
             }
         });
         
+        // Thread utente
         Thread t3 = new Thread(new Runnable() {
             public void run() {
                 
